@@ -17,7 +17,7 @@ def result():
 
     DB_FAISS_PATH = os.getcwd()
 
-    cohere_key = os.environ.get('app_key')
+    cohere_key = os.environ.get('api_key')
 
     pdf_loader = PyPDFLoader("Sample_Travelling_Allowances_Sanit.pdf")
 
