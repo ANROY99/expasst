@@ -8,7 +8,7 @@ from langchain_community.document_loaders import PyPDFLoader
 from langchain_community.vectorstores import FAISS
 from langchain_cohere import ChatCohere
 import os
-import config
+#import config
 
 app = Flask(__name__)
 
@@ -16,6 +16,8 @@ app = Flask(__name__)
 def result():
 
     DB_FAISS_PATH = os.getcwd()
+
+    cohere_key = os.environ.get('app_key')
 
     pdf_loader = PyPDFLoader("Sample_Travelling_Allowances_Sanit.pdf")
 
@@ -33,9 +35,9 @@ def result():
 
     print(f"Total number of documents: {len(all_documents)}")
 
-    co = cohere.Client(config.api_key)
+    co = cohere.Client(cohere_key)
 
-    cohere_embeddings = CohereEmbeddings(cohere_api_key=config.api_key,user_agent='langchain.partner')
+    cohere_embeddings = CohereEmbeddings(cohere_api_key=cohere_key,user_agent='langchain.partner')
 
     db = FAISS.from_documents(documents, cohere_embeddings)
     db.save_local(folder_path=DB_FAISS_PATH)
